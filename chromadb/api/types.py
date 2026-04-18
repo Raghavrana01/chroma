@@ -25,6 +25,7 @@ from pydantic import BaseModel, field_validator, model_validator
 from pydantic_core import PydanticCustomError
 
 import chromadb.errors as errors
+from chromadb.errors import InvalidArgumentError
 from chromadb.base_types import (
     Metadata,
     UpdateMetadata,
@@ -1356,7 +1357,7 @@ def validate_n_results(n_results: int) -> int:
             f"Expected requested number of results to be a int, got {n_results}"
         )
     if n_results <= 0:
-        raise TypeError(
+        raise InvalidArgumentError(
             f"Number of requested results {n_results}, cannot be negative, or zero."
         )
     return n_results
