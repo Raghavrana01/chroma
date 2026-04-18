@@ -25,6 +25,7 @@ from pydantic import BaseModel, field_validator, model_validator
 from pydantic_core import PydanticCustomError
 
 import chromadb.errors as errors
+from chromadb.errors import InvalidArgumentError
 from chromadb.base_types import (
     Metadata,
     UpdateMetadata,
@@ -1077,7 +1078,7 @@ def validate_metadata(metadata: Metadata) -> Metadata:
                 f"Expected metadata to not contain the reserved key {META_KEY_CHROMA_DOCUMENT}"
             )
         if not isinstance(key, str):
-            raise TypeError(
+            raise InvalidArgumentError(
                 f"Expected metadata key to be a str, got {key} which is a {type(key).__name__}"
             )
         # Check if value is a SparseVector (validation happens in __post_init__)
